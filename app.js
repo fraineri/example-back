@@ -1,14 +1,28 @@
-const http = require('http');
+require("dotenv").config();
 
-const hostname = '127.0.0.1';
+const express = require("express");
+const axios = require("axios");
+const AWS = require("aws-sdk");
+const cloudwatchlogs = new AWS.CloudWatchLogs();
+
+const logGroupName = "my-log-group";
+const logStreamName = "my-log-stream";
+
+const app = express();
 const port = 3000;
 
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello World');
+app.get("/", async (req, res) => {
+  const response = await axios.get("https://api.publicapis.org/entries");
+  console.log(response.data);
+  res.send(
+    JSON.stringify({
+      status: "success",
+      data: response.data,
+    })
+  );
 });
 
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
+app.listen(port, () => {
+  console.log(process.env.KEY);
+  console.log(`Example app listening on port ${port}`);
 });
