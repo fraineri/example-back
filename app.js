@@ -9,7 +9,7 @@ const logGroupName = "my-log-group";
 const logStreamName = "my-log-stream";
 
 const app = express();
-const port = 3000;
+const port = 8080;
 
 app.get("/", async (req, res) => {
   const response = await axios.get("https://api.publicapis.org/entries");
