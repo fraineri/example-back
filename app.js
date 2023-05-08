@@ -1,6 +1,8 @@
 require("dotenv").config();
 
 const express = require("express");
+const cors = require("cors");
+
 const axios = require("axios");
 const AWS = require("aws-sdk");
 const cloudwatchlogs = new AWS.CloudWatchLogs();
@@ -9,6 +11,7 @@ const logGroupName = "my-log-group";
 const logStreamName = "my-log-stream";
 
 const app = express();
+app.use(cors());
 const port = 3000;
 
 app.get("/", async (req, res) => {
